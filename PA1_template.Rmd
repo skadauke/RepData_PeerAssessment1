@@ -30,7 +30,16 @@ ggplot(data = total_steps_per_day, aes(steps)) +
     geom_histogram(binwidth = 1000)
 ```
 
-The mean number of steps taken per day was **`r mean(total_steps_per_day$steps)`**. The median number of steps taken per day was **`r median(total_steps_per_day$steps)`**.
+The mean number of steps taken per day was:
+
+```{r}
+mean(total_steps_per_day$steps)
+```
+
+The median number of steps taken per day was: 
+```{r}
+median(total_steps_per_day$steps)
+```
 
 ## What is the average daily activity pattern?
 
@@ -48,11 +57,19 @@ max_interval <- average_steps_by_interval %>%
     filter(steps == max(steps))
 ```
 
-The 5-minute interval with the highest average number of steps (i.e. **`r max_interval$steps`** steps) was **`r max_interval$interval`**.
+The 5-minute interval with the highest average number of steps was:
+
+```{r}
+max_interval$interval
+```
 
 ## Imputing missing values
 
-The total number of rows with missing values in `data` is **`r data$steps %>% is.na %>% sum`**.
+The total number of rows with missing values in `data` is:
+
+```{r}
+data$steps %>% is.na %>% sum
+```
 
 We will impute missing values by substituting the median of each 5-minute interval. Do this using the awesome `simputation` package.
 
@@ -70,7 +87,17 @@ ggplot(data = total_steps_per_day_imputed, aes(steps)) +
     geom_histogram(binwidth = 1000)
 ```
 
-After using imputation, the mean number of steps taken per day was **`r mean(total_steps_per_day_imputed$steps)`**. The median number of steps taken per day was **`r median(total_steps_per_day_imputed$steps)`**. Both of these values are lower than in the original data set.
+After using imputation, the mean number of steps taken per day was: 
+```{r}
+mean(total_steps_per_day_imputed$steps)
+```
+
+The median number of steps taken per day was:
+```{r}
+median(total_steps_per_day_imputed$steps)
+```
+
+Both of these values are lower than in the original data set.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 

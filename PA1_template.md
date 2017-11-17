@@ -8,7 +8,26 @@ output:
 
 ```r
 library(tidyverse)
+```
 
+```
+## ── Attaching packages ───────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+```
+
+```
+## ✔ ggplot2 2.2.1.9000     ✔ purrr   0.2.4     
+## ✔ tibble  1.3.4          ✔ dplyr   0.7.4     
+## ✔ tidyr   0.7.2          ✔ stringr 1.2.0     
+## ✔ readr   1.1.1          ✔ forcats 0.2.0
+```
+
+```
+## ── Conflicts ──────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+```
+
+```r
 # Prevent scientific notation and display results with one significant digit
 options(scipen = 999, digits=1)
 ```
@@ -42,9 +61,28 @@ ggplot(data = total_steps_per_day, aes(steps)) +
     geom_histogram(binwidth = 1000)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-68-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
-The mean number of steps taken per day was **10766.2**. The median number of steps taken per day was **10765**.
+The mean number of steps taken per day was:
+
+
+```r
+mean(total_steps_per_day$steps)
+```
+
+```
+## [1] 10766
+```
+
+The median number of steps taken per day was: 
+
+```r
+median(total_steps_per_day$steps)
+```
+
+```
+## [1] 10765
+```
 
 ## What is the average daily activity pattern?
 
@@ -58,7 +96,7 @@ ggplot(data = average_steps_by_interval, aes(x = interval, y = steps)) +
     geom_line()
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-69-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 
 ```r
@@ -66,11 +104,29 @@ max_interval <- average_steps_by_interval %>%
     filter(steps == max(steps))
 ```
 
-The 5-minute interval with the highest average number of steps (i.e. **206.2** steps) was **835**.
+The 5-minute interval with the highest average number of steps was:
+
+
+```r
+max_interval$interval
+```
+
+```
+## [1] 835
+```
 
 ## Imputing missing values
 
-The total number of rows with missing values in `data` is **2304**.
+The total number of rows with missing values in `data` is:
+
+
+```r
+data$steps %>% is.na %>% sum
+```
+
+```
+## [1] 2304
+```
 
 We will impute missing values by substituting the median of each 5-minute interval. Do this using the awesome `simputation` package.
 
@@ -89,9 +145,29 @@ ggplot(data = total_steps_per_day_imputed, aes(steps)) +
     geom_histogram(binwidth = 1000)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-71-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
-After using imputation, the mean number of steps taken per day was **9402.8**. The median number of steps taken per day was **10395**. Both of these values are lower than in the original data set.
+After using imputation, the mean number of steps taken per day was: 
+
+```r
+mean(total_steps_per_day_imputed$steps)
+```
+
+```
+## [1] 9403
+```
+
+The median number of steps taken per day was:
+
+```r
+median(total_steps_per_day_imputed$steps)
+```
+
+```
+## [1] 10395
+```
+
+Both of these values are lower than in the original data set.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -113,4 +189,4 @@ ggplot(data = average_steps_by_interval_weekend, aes(x = interval, y = steps)) +
     facet_wrap (~weekend, nrow = 2)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-72-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
